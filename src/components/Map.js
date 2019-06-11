@@ -3,7 +3,6 @@ import { css, jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { InfoBox } from 'react-google-maps/lib/components/addons/InfoBox';
 import mapTheme from '../../mapTheme';
 
 const mapStyle = css`
@@ -27,14 +26,6 @@ class Map extends React.Component {
       }
     };
   };
-
-  popUp() {
-    return <InfoBox>
-      <div>
-
-      </div>
-    </InfoBox>
-  }
 
   render() {
     const { stores } = this.props;
