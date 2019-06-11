@@ -26,6 +26,13 @@ install npm packages
 ```
 npm install
 ```
+in the root directory go to the example.env file, from there put your Google Map API key in the spot where it says 'API_KEY_GOES_HERE' then rename the file to just .env
+```
+REACT_APP_GOOGLE_MAPS_API_KEY="https://maps.googleapis.com/maps/api/js?key=API_KEY_GOES_HERE"
+```
+
+if you don't have an API key you can sign up for one [here](https://developers.google.com/maps/documentation/embed/get-api-key)
+
 run the app
 ```
 npm start
