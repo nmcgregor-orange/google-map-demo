@@ -32,7 +32,7 @@ class Map extends React.Component {
 
     const storesList = stores ? (
     stores.map(store => {
-        const JsonStore = JSON.parse(store);
+        const JsonStore = store;
         return <Marker 
             position={
               {
@@ -40,6 +40,7 @@ class Map extends React.Component {
                 lng: JsonStore.coordinates.longitude
               }
             }
+            animation={2}
             key={JsonStore.storeId} 
             >
             <div>

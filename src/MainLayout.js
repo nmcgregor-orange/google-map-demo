@@ -3,7 +3,8 @@ import { css, jsx } from '@emotion/core';
 import React from 'react';
 require('dotenv').config();
 import axios from 'axios';
-import WrappedMap from "./components/Map.js";
+import Stores from './components/stores'
+// import WrappedMap from "./components/Map.js";
 
 class MainLayout extends React.Component {
     constructor(props) {
@@ -37,19 +38,20 @@ class MainLayout extends React.Component {
     }
 
     componentDidMount() {
-        this.getItems();
+        // this.getItems();
     }
 
     render() {
         return (
             <div>
-                <WrappedMap
+                <Stores />
+                {/* <WrappedMap
                     googleMapURL={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `1100px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                     stores={this.state.stores}
-                />
+                /> */}
             </div>
         );
     }
