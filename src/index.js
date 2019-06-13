@@ -4,16 +4,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import MainLayout from './MainLayout.js';
 
-const AppStyles = css`
-
-`;
-
 class App extends React.Component {
+
   render() {
     return (
-      <div className="">
+      <div >
         <React.Fragment>
-          <Global styles={AppStyles} />
+          <Global/>
           <MainLayout/>
         </React.Fragment>
       </div>);

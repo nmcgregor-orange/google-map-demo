@@ -5,17 +5,11 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-map
 import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import mapTheme from '../../mapTheme';
 
-const mapStyle = css`
-  .mapSize {
-    width: 100%;
-    height: 100%;
-  }
-`;
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       viewport: {
         width: 2400,
@@ -26,6 +20,31 @@ class Map extends React.Component {
       }
     };
   };
+
+  // mapStyle = css`
+  //   .mapSize {
+  //     width: 100%;
+  //     height: 100%;
+  //   }
+
+  //   @keyframes bounceIn {
+  //     0% {
+  //       transform: scale(0.1);
+  //       opacity: 0;
+  //     }
+  //     60% {
+  //       transform: scale(1.2);
+  //       opacity: 1;
+  //     }
+  //     100% {
+  //       transform: scale(1);
+  //     }
+  //   }
+
+  //   .markerBounce {
+  //     animation: bounceIn 2s;
+  //   }
+  // `;
 
   render() {
     const { stores } = this.props;
@@ -42,10 +61,14 @@ class Map extends React.Component {
             }
             animation={2}
             key={JsonStore.storeId} 
+            // icon={{
+            //   url: `/mymarker.svg`,
+            //   scaledSize: new window.google.maps.Size(25, 25)
+            // }}
             >
-            <div>
+            {/* <div>
               {JsonStore.name}
-            </div>
+            </div> */}
         </Marker>
     })
     ) : null;

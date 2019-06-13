@@ -6,6 +6,15 @@ import axios from 'axios';
 import Stores from './components/stores'
 // import WrappedMap from "./components/Map.js";
 
+const mainStyles = css`
+    .storeLoad {
+        background: linear-gradient(to bottom right, #ff9966 0%, #ff5050 100%);
+        height: 1100px;
+        width: 100%;
+        display: inline-block;
+    }
+`
+
 class MainLayout extends React.Component {
     constructor(props) {
         super(props);
@@ -43,15 +52,10 @@ class MainLayout extends React.Component {
 
     render() {
         return (
-            <div>
-                <Stores />
-                {/* <WrappedMap
-                    googleMapURL={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `1100px` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                    stores={this.state.stores}
-                /> */}
+            <div css={mainStyles}>
+                <div className="storeLoad">
+                    <Stores />
+                </div>
             </div>
         );
     }

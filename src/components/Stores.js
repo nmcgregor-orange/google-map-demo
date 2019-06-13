@@ -1,9 +1,53 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import React from 'react';
 import WrappedMap from './map';
 import socketIOClient from "socket.io-client";
 require('dotenv').config();
+import hdLogo from './hdlogo.png'
 
 const ENDPOINT =  "http://127.0.0.1:5000/";     //global variable where its looking for input from producer 
+
+const storeStyles = css`
+    @keyframes rotate {
+        0% {
+            transform: rotatey(0deg);
+            opacity: 1;
+        }
+
+        30% {
+            transform: rotatey(0deg);
+            opacity: 1;
+        }
+        
+        60% {
+            transform: rotatey(180deg);
+            opacity: 0;
+        }
+        
+        80% {
+            transform: rotatey(360deg);
+        }
+
+        100% {
+            transform: rotatey(360deg);
+            opacity: 1;
+        }
+    }
+
+    .makeSpin {
+        position: absolute;
+        animation: rotate 4.3s ease-out 0s infinite;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        display: inline-block;
+        top: 40%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+    }
+`;
 
 class Stores extends React.Component {
     constructor(props) {
@@ -16,6 +60,7 @@ class Stores extends React.Component {
         }
     }
 
+    
     componentDidMount() {
         const socket = socketIOClient(ENDPOINT);
         socket.on("stores", data => {
@@ -53,8 +98,8 @@ class Stores extends React.Component {
             return <div>Error: {error.message}</div>;
         }else if (!isLoaded){
             return (
-                <div>
-                    {/* loading thing */}
+                <div css={storeStyles}>
+                    <img className="makeSpin" src={hdLogo} alt="Logo"></img> 
                 </div>
             );
         } else {
