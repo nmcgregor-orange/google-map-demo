@@ -68,7 +68,7 @@ const storeStyles = css`
 
     .makeSpin {
         position: absolute;
-        animation: rotate 4.3s ease-out 0s infinite alternate-reverse;
+        animation: rotate 4s ease-out 0s infinite alternate-reverse;
         width: 200px;
         height: 200px;
         margin: 0 auto;
@@ -81,7 +81,7 @@ const storeStyles = css`
 
     .makeSpinOff {
         position: absolute;
-        animation: rotateOff 4.3s linear 0s infinite alternate-reverse;
+        animation: rotateOff 4s linear 0s infinite alternate-reverse;
         width: 450px;
         height: 600px;
         margin: 0 auto;
