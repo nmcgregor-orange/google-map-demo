@@ -5,6 +5,7 @@ import WrappedMap from './map';
 import socketIOClient from "socket.io-client";
 require('dotenv').config();
 import hdLogo from './hdlogo.png'
+import qcLogo from './qclogo.png'
 
 const ENDPOINT =  "http://127.0.0.1:5000/";     //global variable where its looking for input from producer 
 
@@ -19,10 +20,40 @@ const storeStyles = css`
             transform: rotatey(0deg);
             opacity: 1;
         }
+
+        50% {
+            opacity: 0;
+        }
         
         60% {
             transform: rotatey(180deg);
             opacity: 0;
+        }
+        
+        80% {
+            transform: rotatey(360deg);
+        }
+
+        100% {
+            transform: rotatey(360deg);
+            opacity: 0;
+        }
+    }
+
+    @keyframes rotateOff {
+        0% {
+            transform: rotatey(180deg);
+            opacity: 0;
+        }
+
+        22% {
+            transform: rotatey(180deg);
+            opacity: 0;
+        }
+        
+        60% {
+            transform: rotatey(360deg);
+            opacity: 1;
         }
         
         80% {
@@ -37,13 +68,26 @@ const storeStyles = css`
 
     .makeSpin {
         position: absolute;
-        animation: rotate 4.3s ease-out 0s infinite;
+        animation: rotate 4.3s ease-out 0s infinite alternate-reverse;
         width: 200px;
         height: 200px;
         margin: 0 auto;
         display: inline-block;
         top: 40%;
         left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+    }
+
+    .makeSpinOff {
+        position: absolute;
+        animation: rotateOff 4.3s linear 0s infinite alternate-reverse;
+        width: 450px;
+        height: 600px;
+        margin: 0 auto;
+        display: inline-block;
+        top: 25%;
+        left: 45%;
         margin-top: -50px;
         margin-left: -50px;
     }
@@ -100,6 +144,7 @@ class Stores extends React.Component {
             return (
                 <div css={storeStyles}>
                     <img className="makeSpin" src={hdLogo} alt="Logo"></img> 
+                    <img className="makeSpinOff" src={qcLogo} alt="Logo"></img> 
                 </div>
             );
         } else {
