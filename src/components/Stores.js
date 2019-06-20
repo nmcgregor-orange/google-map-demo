@@ -94,41 +94,47 @@ const storeStyles = css`
 `;
 
 function Stores() {
-    const [error, setError] = useState(null)
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [jsonResult, setJsonResult] = useState([])
-    const [response, setResponse] = useState([])
+    const initialState = {
+        error: null,
+        isLoaded: false,
+        jsonResult: [],
+        response: [],
+    }
+    
+    const [state, setState] = useState(initialState)
+
 
     useEffect(() => {
         const socket = socketIOClient(ENDPOINT);
         socket.on("stores", data => {
-            (
-                setResponse(data),
-                fetchStoreData(data)
-            )
+                setState({ ...state, response: data });
+                fetchStoreData(data);
         });
-    });
-
+    }, [state.jsonResult])
+    
     function fetchStoreData(storeNumber){
         fetch(`https://store-info-service--store-info-production.pr-hdqc.io/api/v2/store/${storeNumber}`)
         .then((result) => result.json())
         .then(
             (resultAc) => {
-                const newResults = jsonResult;
+                const newResults = state.jsonResult;
                 newResults.push(resultAc);
-                setIsLoaded(true);
-                setJsonResult(newResults);
+                setState({...state, 
+                    isLoaded: true, 
+                    jsonResult: newResults
+                });
+                
             },
             (error) => {
-                setIsLoaded(true);
+                setState({...state, isLoaded: true});
                 error;
             }
         )
     }
 
-    if(error) {
-        return <div>Error: {error.message}</div>;
-    }else if (!isLoaded){
+    if(state.error) {
+        return <div>Error: {state.error.message}</div>;
+    }else if (!state.isLoaded){
         return (
             <div css={storeStyles}>
                 <img className="makeSpin" src={hdLogo} alt="Logo"></img> 
@@ -142,7 +148,7 @@ function Stores() {
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `1100px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
-            stores={jsonResult} 
+            stores={state.jsonResult} 
             />
         )
     }
