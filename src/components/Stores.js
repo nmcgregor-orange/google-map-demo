@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import WrappedMap from './map';
 import socketIOClient from "socket.io-client";
 require('dotenv').config();
@@ -93,64 +93,72 @@ const storeStyles = css`
     }
 `;
 
-function Stores() {
-    const initialState = {
-        error: null,
-        isLoaded: false,
-        jsonResult: [],
-        response: [],
+class Stores extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            jsonResult: [],
+            response: [],
+        }
     }
+
     
-    const [state, setState] = useState(initialState)
-
-
-    useEffect(() => {
+    componentDidMount() {
+        console.log("componentDidMount Render")
         const socket = socketIOClient(ENDPOINT);
         socket.on("stores", data => {
-                setState({ ...state, response: data });
-                fetchStoreData(data);
+            this.setState(
+                { response: data },
+                () =>this.fetchStoreData(data)
+            )
         });
-    }, [state.jsonResult])
-    
-    function fetchStoreData(storeNumber){
+    }
+
+    fetchStoreData(storeNumber){
         fetch(`https://store-info-service--store-info-production.pr-hdqc.io/api/v2/store/${storeNumber}`)
         .then((result) => result.json())
         .then(
             (resultAc) => {
-                const newResults = state.jsonResult;
+                const newResults = this.state.jsonResult;
                 newResults.push(resultAc);
-                setState({...state, 
-                    isLoaded: true, 
-                    jsonResult: newResults
+                this.setState({
+                    isLoaded: true,
+                    jsonResult: newResults,
                 });
-                
             },
             (error) => {
-                setState({...state, isLoaded: true});
-                error;
+                this.setState({
+                    isLoaded: true,
+                    error
+                })
             }
         )
     }
 
-    if(state.error) {
-        return <div>Error: {state.error.message}</div>;
-    }else if (!state.isLoaded){
-        return (
-            <div css={storeStyles}>
-                <img className="makeSpin" src={hdLogo} alt="Logo"></img> 
-                <img className="makeSpinOff" src={qcLogo} alt="Logo"></img> 
-            </div>
-        );
-    } else {
-        return(
-            <WrappedMap 
-            googleMapURL={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `1100px` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-            stores={state.jsonResult} 
-            />
-        )
+    render() {
+        const { error, isLoaded } = this.state;
+        if(error) {
+            return <div>Error: {error.message}</div>;
+        }else if (!isLoaded){
+            return (
+                <div css={storeStyles}>
+                    <img className="makeSpin" src={hdLogo} alt="Logo"></img> 
+                    <img className="makeSpinOff" src={qcLogo} alt="Logo"></img> 
+                </div>
+            );
+        } else {
+            return(
+                <WrappedMap 
+                googleMapURL={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                loadingElement={<div style={{ height: `100%` }} />}
+                containerElement={<div style={{ height: `1100px` }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+                stores={this.state.jsonResult} 
+                />
+            )
+        }
     }
 }
 

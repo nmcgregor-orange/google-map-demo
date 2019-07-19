@@ -87,7 +87,7 @@ class Map extends React.Component {
           >
             {storesList}
           </MarkerClusterer>
-         </GoogleMap>
+         </GoogleMap>  
        </div>
     );
   }
